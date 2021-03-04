@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeSheetDriversApp.Mobile.Views.CreateRequestPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Text="Request" FontSize="Large"  />
+                <Picker Grid.Column="1" Grid.Row="0"  FontSize="Large" Margin="0,-14,0,0" ItemsSource="{Binding RequestTypeList}" SelectedItem="{Binding SelectedRequestType}" />
+
+                <Label Grid.Column="0" Grid.Row="1" Text="Start date" FontSize="Large"  />
+                <DatePicker Grid.Column="1" Grid.Row="1" Date="{Binding StartDate}" FontSize="Large" Margin="0,-14,0,0"/>
+
+                <Label Grid.Column="0" Grid.Row="2" Text="Start time" FontSize="Large"  />
+                <TimePicker Grid.Column="1" Grid.Row="2" Time="{Binding StartTime}" FontSize="Large" Margin="0,-14,0,0" IsEnabled="{Binding TimeEditable}"/>
+
+                <Label Grid.Column="0" Grid.Row="3" Text="End date" FontSize="Large"  />
+                <DatePicker Grid.Column="1" Grid.Row="3" Date="{Binding EndDate}" FontSize="Large" Margin="0,-14,0,0"/>
+
+                <Label Grid.Column="0" Grid.Row="4" Text="End time" FontSize="Large"  />
+                <TimePicker Grid.Column="1" Grid.Row="4" Time="{Binding EndTime}" FontSize="Large" Margin="0,-14,0,0" IsEnabled="{Binding TimeEditable}"/>
+
+                <StackLayout Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
+                    <Button Text="Submit Request" Command="{Binding SubmitRequestCommand}" />
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

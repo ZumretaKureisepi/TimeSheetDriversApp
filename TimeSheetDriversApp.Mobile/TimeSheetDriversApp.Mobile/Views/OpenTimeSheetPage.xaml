@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TimeSheetDriversApp.Mobile.ViewModels"
+             xmlns:dto="clr-namespace:TimeSheetDriversApp.Model.DTO;assembly=TimeSheetDriversApp.Model"
+             x:Class="TimeSheetDriversApp.Mobile.Views.OpenTimeSheetPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Approve &amp; Close" Command="{Binding ApproveCloseCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Padding="5">
+            <Picker x:Name="monthsPicker" SelectedItem="{Binding SelectedMonth}" ItemsSource="{Binding MonthsList}" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemDisplayBinding="{Binding Text}"></Picker>
+            <Picker x:Name="yearsPicker" SelectedItem="{Binding SelectedYear}" ItemsSource="{Binding YearsList}" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemDisplayBinding="{Binding Text}"></Picker>
+            <RefreshView x:DataType="vm:OpenTimeSheetVM" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10" x:DataType="dto:TimeSheetDTO" Orientation="Horizontal">
+
+                                <StackLayout WidthRequest="50">
+                                    <Label Text="{Binding DayNo}" 
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                            LineBreakMode="NoWrap" 
+                           BackgroundColor="Black"
+                           HeightRequest="65"
+                           TextColor="White"
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="32"
+                           />
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical">
+
+                                    <Label Text="{Binding DayTypeStr}" 
+                           HorizontalTextAlignment="Center"
+                            LineBreakMode="NoWrap" 
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="24"
+                           />
+                                    <Label Text="{Binding DayName}" 
+                            LineBreakMode="NoWrap" 
+                           TextColor="Black"
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="20"
+                           />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="EndAndExpand">
+                                    <Label Text="{Binding WorkTime}" 
+                           HorizontalTextAlignment="End"
+                            LineBreakMode="NoWrap" 
+                           TextColor="Black"
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="32"
+                           />
+                                </StackLayout>
+
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OpenTimeSheetVM}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

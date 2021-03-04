@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TimeSheetDriversApp.Mobile.ViewModels"
+             xmlns:dto="clr-namespace:TimeSheetDriversApp.Model.DTO;assembly=TimeSheetDriversApp.Model"
+             x:Class="TimeSheetDriversApp.Mobile.Views.RequestsListPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create Request" Command="{Binding GoToCreateRequestCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Padding="5">
+
+            <RefreshView x:DataType="vm:RequestsListVM" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10" x:DataType="dto:RequestDTO" Orientation="Horizontal">
+
+                                <StackLayout >
+
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <Label Text="{Binding RequestTypeStr}" 
+                                            LineBreakMode="NoWrap" 
+                                           FontAttributes="Bold"
+                                            Style="{DynamicResource ListItemTextStyle}" 
+                                            FontSize="16" />
+
+                                        <Label Text="Request"
+                                           FontAttributes="Bold"
+                                               FontSize="16" 
+                                            Style="{DynamicResource ListItemTextStyle}"  />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                                        <Label Text="{Binding StartDateStr}" FontSize="Large" HorizontalTextAlignment="Center"  />
+                                        
+                                        <Label Text="-" FontSize="Large" HorizontalTextAlignment="Center" />
+                                        <Label Text="{Binding EndDateStr}" FontSize="Large" HorizontalTextAlignment="Center" />
+                                    </StackLayout>
+                                   
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="EndAndExpand">
+                                    <Label Text="{Binding StatusStr}" FontSize="Large" HorizontalTextAlignment="End" />
+                                </StackLayout>
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

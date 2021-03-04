@@ -1,0 +1,35 @@
+﻿@model TimeSheetIndexVM
+
+@{
+    ViewData["Title"] = "Export Time Sheets";
+}
+<div class="card">
+
+    <form method="post" asp-action="Export" class="form-inline">
+        <div style="margin: 5px 24px">
+
+            <div style="margin: 8px 0">
+                <label asp-for="SearchRequest.UserId" style="display: inline-block; width: 70px;"></label>
+                @Html.ListBoxFor(model => model.SearchRequest.UserIDs, new MultiSelectList(Model.UsersList, "Value", "Text", Model.SearchRequest.UserIDs), new { @class = "form-control", multiple = "multiple", id = "Users_dropdown" })
+            </div>
+
+            <div style="margin: 8px 0">
+                <label asp-for="SearchRequest.Month" style="display: inline-block; width: 70px;"></label>
+                @Html.ListBoxFor(model => model.SearchRequest.Months, new MultiSelectList(Model.MonthsList, "Value", "Text", Model.SearchRequest.Months), new { @class = "form-control", multiple = "multiple", id = "Months_dropdown" })
+            </div>
+            <div style="margin: 8px 0">
+                <label asp-for="SearchRequest.Year" style="display: inline-block; width: 70px;"></label>
+                <select asp-for="SearchRequest.Year" style="display: inline-block;" asp-items="Model.YearsList" class="form-control">
+                </select>
+            </div>
+
+            <div style="margin: 12px 20px">
+                <button name="SelectedFormat" value="XLSX" class="btn btn-primary">Export to Excel</button>
+                <button name="SelectedFormat" value="PDF" class="btn btn-primary">Export to PDF</button>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+

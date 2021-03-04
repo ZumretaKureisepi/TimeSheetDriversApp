@@ -1,0 +1,78 @@
+﻿@model List<AuditFileDTO>
+@{
+    ViewData["Title"] = "Audit Files";
+}
+
+<div class="card">
+    <div class="card-body p-0">
+
+
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 10%">
+                        Timesheet KEY
+                    </th>
+                    <th style="width: 7%">
+                        DayNo
+                    </th>
+                    <th style="width: 10%">
+                        Field
+                    </th>
+                    <th width="10%">
+                        Old Value
+                    </th>
+                    <th style="width: 10%">
+                        New Value
+                    </th>
+                    <th style="width: 20%">
+                        Date & Time of Change
+                    </th>
+                    <th style="width: 18%">
+                        Changed by User
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.TimeSheet.TimeSheetKey
+                        </td>
+                        <td>
+                            @item.TimeSheet.DayNo
+                        </td>
+                        <td>
+                            @item.FieldStr
+
+                        </td>
+                        <td>
+                            @item.OldValueStr
+                        </td>
+                        <td>
+                            @item.NewValueStr
+                        </td>
+                        <td>
+                            @item.DateChangedStr
+                        </td>
+                        <td>
+                            @item.ChangedByUser.Username
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div style="margin: 12px 20px">
+            <a asp-action="Export"
+               class="btn btn-success"><i class="fa fa-file-export"></i> Export PDF/XLS</a>
+        </div>
+
+    </div>
+
+    <!-- /.card-body -->
+</div>

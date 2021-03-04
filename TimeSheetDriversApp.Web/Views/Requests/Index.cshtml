@@ -1,0 +1,108 @@
+﻿@model RequestsUpdateVM
+@{
+    ViewData["Title"] = "Requests and Approvals";
+    int i = 1;
+
+}
+
+<form asp-action="Update" method="post">
+    <div class="card">
+        <div class="card-body p-0">
+
+
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 8%">
+                            Request #
+                        </th>
+                        <th style="width: 10%">
+                            Date
+                        </th>
+                        <th style="width: 10%">
+                            User Name
+                        </th>
+                        <th width="10%">
+                            Request
+                        </th>
+                        <th style="width: 10%">
+                            Start Time
+                        </th>
+                        <th style="width: 10%">
+                            Start Date
+                        </th>
+                        <th style="width: 18%">
+                            End Time
+                        </th>
+                        <th style="width: 10%">
+                            End Date
+                        </th>
+                        <th style="width: 10%">
+                            Status
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.requests)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.DateOfRequestStr
+                            </td>
+                            <td>
+                                @item.User.Name
+
+                            </td>
+                            <td>
+                                @item.RequestTypeStr
+                            </td>
+                            <td>
+                                @item.StartTimeStr
+                            </td>
+                            <td>
+                                @item.StartDateStr
+                            </td>
+                            <td>
+                                @item.EndTimeStr
+                            </td>
+                            <td>
+                                @item.EndDateStr
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                @if (item.Status == RequestStatus.Pending)
+                                {
+                                    <input type="checkbox" name="selectedRequests" value="@item.RequestId" />
+                                }
+                            </td>
+
+                        </tr>
+                        i++;
+
+                    }
+                </tbody>
+            </table>
+            <div>&nbsp;</div>
+
+            <div class="buttonRow row" style="width: 100%">
+                <div class="col-md-4 offset-md-2 text-center">
+                    <button name="Action" value="Approve" class="btn btn-success" disabled>Approve selected</button>
+
+                </div>
+                <div class="col-md-4 text-center">
+                    <button name="Action" value="Decline" class="btn btn-danger" disabled>Decline selected</button>
+
+                </div>
+            </div>
+            <div>&nbsp;</div>
+
+            <!-- /.card-body -->
+        </div>
+    </div>
+</form>

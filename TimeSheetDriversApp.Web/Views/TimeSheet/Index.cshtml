@@ -1,0 +1,155 @@
+﻿@model TimeSheetIndexVM
+
+@{
+    ViewData["Title"] = "Edit Timesheet";
+    int i = 0;
+}
+<div class="card">
+
+    <form method="get" asp-action="Index" class="form-inline">
+        <div style="margin: 12px 0">
+
+            <div style="width: 250px; text-align: center; display: inline-block;">
+                <label asp-for="SearchRequest.UserId" style="display: inline-block;"></label>
+                <select asp-for="SearchRequest.UserId" asp-items="Model.UsersList" class="form-control" onchange="this.form.submit();">
+                </select>
+            </div>
+
+            <div style="width: 250px; text-align: center; display: inline-block;">
+                <label asp-for="SearchRequest.Month" style="display: inline-block;"></label>
+                <select asp-for="SearchRequest.Month" style="display: inline-block;" asp-items="Model.MonthsList" class="form-control" onchange="this.form.submit();">
+                </select>
+            </div>
+            <div style="width: 250px; text-align: center; display: inline-block;">
+                <label asp-for="SearchRequest.Year" style="display: inline-block;"></label>
+                <select asp-for="SearchRequest.Year" style="display: inline-block;" asp-items="Model.YearsList" class="form-control" onchange="this.form.submit();">
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <form method="post" asp-action="Update">
+        @Html.HiddenFor(x => x.SearchRequest.Year)
+        @Html.HiddenFor(x => x.SearchRequest.Month)
+        @Html.HiddenFor(x => x.SearchRequest.UserId)
+        <div class="card-body p-0">
+
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">
+                            Day
+                        </th>
+                        <th style="width: 9%">
+                            Type
+                        </th>
+                        <th style="width: 8%">
+                            Start Time
+                        </th>
+                        <th style="width: 8%">
+                            End Time
+                        </th>
+                        <th style="width: 10%">
+                            Break
+                        </th>
+                        <th style="width: 10%">
+                            Work time
+                        </th>
+                        <th style="width: 10%">
+                            M³
+                        </th>
+                        <th style="width: 11%">
+                            Km-stand
+                        </th>
+                        <th style="width: 7%">
+                            Privat
+                        </th>
+                        <th style="width: 5%">
+                            Fuel
+                        </th>
+                        <th style="width: 5%">
+                            AdBlue
+                        </th>
+                        <th style="width: 10%">
+                            Notes
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @for(int i = 0; i < Model.TimeSheet.Count; i++)
+                    {
+                        var item = Model.TimeSheet[i];
+                    <tr>
+                        <td>
+                            @item.DayNo
+                            <input type="hidden" asp-for="TimeSheet[i].TimeSheetId" />
+                        </td>
+                        <td>
+                            <select asp-for="TimeSheet[i].DayType" asp-items="@Model.DayTypeList" style="width: 175px" class="form-control"></select>
+                        </td>
+                        @if (item.DayType == DayType.WorkDay || item.DayType == DayType.TimeConsumption)
+                        {
+                            <td>
+                                <input type="text" class="form-control" style="width: 75px" asp-for="TimeSheet[i].StartTime" value="@item.StartTimeStr" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" style="width: 75px" asp-for="TimeSheet[i].EndTime" value="@item.EndTimeStr" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" style="width: 75px" asp-for="TimeSheet[i].BreakTime" value="@item.BreakTimeStr" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        <td>
+                            @item.WorkTime
+                        </td>
+                        <td>
+                            @item.MetersSquared
+                        </td>
+
+                        <td>
+                            @item.KmStand
+                        </td>
+                        <td>
+                            @item.PrivatTanken
+                        </td>
+                        <td>
+                            @item.Fuel
+                        </td>
+                        <td>
+                            @item.AdBlue
+                        </td>
+                        <td>
+                            @item.Notes
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div style="margin: 12px 20px">
+            <a asp-action="Export"
+               asp-route-SearchRequest.UserId="@Model.SearchRequest.UserId"
+               asp-route-SearchRequest.Month="@Model.SearchRequest.Month"
+               asp-route-SearchRequest.Year="@Model.SearchRequest.Year"
+               class="btn btn-success">
+                <i class="fa fa-file-export"></i> Export PDF/XLS
+            </a>
+            <button type="submit" class="btn btn-success"> Save edit</button>
+
+        </div>
+    </form>
+
+
+    <!-- /.card-body -->
+</div>
+
+<!-- /.card -->

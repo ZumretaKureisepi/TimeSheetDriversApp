@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TimeSheetDriversApp.Mobile.Views.TimeSheetEditPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding TimeSheet.EntryDateStr}" FontSize="Large" HorizontalTextAlignment="Center" Margin="0,0,0,10" />
+
+
+
+                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2" BackgroundColor="#3C3C3C">
+                    <StackLayout Orientation="Vertical" WidthRequest="100">
+                        <Label  Text="Start time" FontSize="Large" TextColor="White" HorizontalTextAlignment="Center"  />
+                        <TimePicker Time="{Binding StartTime}" TextColor="White" FontSize="Large" Margin="0,-14,0,0"  HorizontalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout BackgroundColor="#2a2a2a" Orientation="Vertical"  WidthRequest="150" Padding="2">
+                        <StackLayout BackgroundColor="#fafafa" HeightRequest="61">
+                            <Label  Text="Break time" FontSize="Large" HorizontalTextAlignment="Center" Margin="0,-2,0,0" />
+                            <Entry Text="{Binding BreakTime}" WidthRequest="75" FontSize="Large" Margin="0,-14,0,0" HorizontalOptions="Center"/>
+                        </StackLayout>
+
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" WidthRequest="100">
+                        <Label  Text="End time" FontSize="Large" TextColor="White" HorizontalTextAlignment="Center" />
+                        <TimePicker Time="{Binding EndTime}" TextColor="White" FontSize="Large" Margin="0,-14,0,0" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <Label Grid.Row="2" Grid.Column="0"  Text="Day Type:" FontSize="Large" />
+                <Picker Grid.Row="2" Grid.Column="1" SelectedItem="{Binding SelectedDayType}" ItemsSource="{Binding DayTypeList}" ItemDisplayBinding="{Binding Text}"  IsVisible="{Binding DayTypeEditable}" IsEnabled="{Binding DayTypeEnabled}"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding TimeSheet.DayTypeStr}" FontSize="Large" IsVisible="{Binding DayTypeLocked}"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Text="M³" FontSize="Large"/>
+                <Entry Grid.Row="3" Grid.Column="1" Text="{Binding TimeSheet.MetersSquared}" IsReadOnly="{Binding TimeEntryLocked}"/>
+
+                <Label Grid.Row="4" Grid.Column="0" Text="Km-Stand" FontSize="Large"/>
+                <Entry Grid.Row="4" Grid.Column="1" Text="{Binding TimeSheet.KmStand}" IsReadOnly="{Binding TimeEntryLocked}"/>
+
+                <Label Grid.Row="5" Grid.Column="0" Text="Privat Tanken" FontSize="Large"/>
+                <Entry Grid.Row="5" Grid.Column="1" Text="{Binding TimeSheet.PrivatTanken}" IsReadOnly="{Binding TimeEntryLocked}"/>
+
+                <Label Grid.Row="6" Grid.Column="0" Text="Fuel" FontSize="Large"/>
+                <Entry Grid.Row="6" Grid.Column="1" Text="{Binding TimeSheet.Fuel}" IsReadOnly="{Binding TimeEntryLocked}"/>
+
+                <Label Grid.Row="7" Grid.Column="0" Text="AdBlue" FontSize="Large"/>
+                <Entry Grid.Row="7" Grid.Column="1" Text="{Binding TimeSheet.AdBlue}" IsReadOnly="{Binding TimeEntryLocked}"/>
+
+                <Label Grid.Row="8" Grid.Column="0" Text="Notes" FontSize="Large"/>
+                <Entry Grid.Row="8" Grid.Column="1" Text="{Binding TimeSheet.Notes}" IsReadOnly="{Binding TimeEntryLocked}"/>
+
+                <StackLayout Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" >
+                    <Button Text="Save" Command="{Binding SaveCommand}" />
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
